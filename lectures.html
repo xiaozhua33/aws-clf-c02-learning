@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>详细讲解 - AWS CLF-C02 学习系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 卡片网格布局 */
+        .lectures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .lecture-card {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            cursor: pointer;
+            border-left: 4px solid var(--aws-orange);
+        }
+
+        .lecture-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .lecture-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .lecture-number {
+            background: var(--aws-orange);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .lecture-card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0.5rem 0;
+            line-height: 1.4;
+        }
+
+        .lecture-preview {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0.8rem 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .lecture-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .meta-tag {
+            background: var(--bg-secondary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+        }
+
+        /* 弹窗模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .modal-header {
+            position: sticky;
+            top: 0;
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-bottom: 2px solid var(--border-color);
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin: 0;
+            flex: 1;
+        }
+
+        .modal-close {
+            background: var(--bg-secondary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-primary);
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+
+        .modal-close:hover {
+            background: var(--aws-orange);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-body h3 {
+            color: var(--aws-orange);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .modal-body p {
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin: 1rem 0;
+        }
+
+        .modal-body ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+            line-height: 1.8;
+        }
+
+        .modal-body li {
+            margin: 0.5rem 0;
+            color: var(--text-primary);
+        }
+
+        .modal-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .highlight-box {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--aws-orange);
+        }
+
+        .highlight-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .highlight-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* 搜索和筛选增强 */
+        .search-stats {
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .lectures-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal.active {
+                padding: 1rem;
+            }
+
+            .modal-content {
+                max-height: 95vh;
+            }
+
+            .modal-header {
+                padding: 1.5rem;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* 加载动画 */
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--aws-orange);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="nav-left">
+                    <h1 class="logo">☁️ AWS CLF-C02 学习导航</h1>
+                </div>
+                <div class="nav-right">
+                    <a href="index.html" class="nav-link">概念清单</a>
+                    <a href="lectures.html" class="nav-link active">详细讲解</a>
+                    <a href="resources.html" class="nav-link">官方资源</a>
+                    <a href="exam-prep.html" class="nav-link">考前冲刺</a>
+                    <button id="theme-toggle" class="theme-btn" title="切换主题">🌙</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 页面标题 -->
+        <header class="page-header">
+            <h2>📚 97讲 IT 实战解说</h2>
+            <p>口语化讲解 · 生活化类比 · 直击考点 · 易混点辨析</p>
+        </header>
+
+        <!-- 搜索和筛选 -->
+        <section class="search-section">
+            <div class="search-controls">
+                <input type="text" id="lecture-search" class="search-input" placeholder="🔍 搜索讲次、服务或关键词...">
+                <select id="lecture-filter" class="domain-filter">
+                    <option value="all">全部讲次</option>
+                    <option value="1-17">Part 1: 基础概念与安全 (1-17讲)</option>
+                    <option value="18-41">Part 2: 核心服务深度 (18-41讲)</option>
+                    <option value="42-66">Part 3: 网络与管理 (42-66讲)</option>
+                    <option value="67-97">Part 4: 全栈进阶 (67-97讲)</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- 搜索统计 -->
+        <div id="search-stats" class="search-stats"></div>
+
+        <!-- 加载提示 -->
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <p>正在加载讲解数据...</p>
+        </div>
+
+        <!-- 讲解卡片网格 -->
+        <section class="lectures-content">
+            <div id="lectures-grid" class="lectures-grid">
+                <!-- 动态生成卡片 -->
+            </div>
+            <div id="no-results" class="no-results" style="display: none;">
+                <h3>😕 没有找到匹配的讲次</h3>
+                <p>试试调整搜索关键词或筛选条件</p>
+            </div>
+        </section>
+
+        <!-- 详情弹窗 -->
+        <div id="lecture-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title" class="modal-title"></h2>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-body-content"></div>
+                    <div id="modal-highlights" class="modal-highlights"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>🎓 AWS Certified Cloud Practitioner (CLF-C02) 学习系统 · 版本 2.0</p>
+            <p>97讲完整内容 · 总学习时长约31.2小时</p>
+        </footer>
+    </div>
+
+    <!-- 引入脚本 -->
+    <script src="js/lectures-data.js"></script>
+    <script>
+        // 主题切换
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        function updateThemeButton() {
+            const themeBtn = document.getElementById('theme-toggle');
+            if (themeBtn) {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                themeBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+            }
+        }
+
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            updateThemeButton();
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeButton();
+            });
+        }
+
+        // 渲染讲解卡片
+        function renderLectures(lectures = lecturesData) {
+            const container = document.getElementById('lectures-grid');
+            const noResults = document.getElementById('no-results');
+            const searchStats = document.getElementById('search-stats');
+            
+            if (!lectures || lectures.length === 0) {
+                container.innerHTML = '';
+                noResults.style.display = 'block';
+                searchStats.textContent = '共 0 讲';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            searchStats.textContent = `共 ${lectures.length} 讲`;
+
+            container.innerHTML = lectures.map(lecture => {
+                const preview = lecture.content ? 
+                    lecture.content.replace(/<[^>]*>/g, '').substring(0, 150) + '...' : 
+                    '点击查看详细内容...';
+
+                return `
+                    <div class="lecture-card" onclick="openModal(${lecture.id})">
+                        <div class="lecture-card-header">
+                            <span class="lecture-number">第 ${lecture.id} 讲</span>
+                        </div>
+                        <h3 class="lecture-card-title">${lecture.title || '标题加载中...'}</h3>
+                        <div class="lecture-preview">${preview}</div>
+                        <div class="lecture-meta">
+                            ${lecture.keyTakeaway ? '<span class="meta-tag">💡 关键记忆点</span>' : ''}
+                            ${lecture.misconception ? '<span class="meta-tag">❌ 易混点</span>' : ''}
+                            ${lecture.examTips ? '<span class="meta-tag">🎯 考点提示</span>' : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 打开详情弹窗
+        function openModal(lectureId) {
+            const lecture = lecturesData.find(l => l.id === lectureId);
+            if (!lecture) return;
+
+            const modal = document.getElementById('lecture-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body-content');
+            const modalHighlights = document.getElementById('modal-highlights');
+
+            modalTitle.textContent = `第 ${lecture.id} 讲 | ${lecture.title}`;
+            modalBody.innerHTML = lecture.content || '<p>内容加载中...</p>';
+
+            // 渲染关键信息
+            let highlightsHtml = '';
+            if (lecture.keyTakeaway) {
+                highlightsHtml += `
+                    <div class="highlight-box">
+                        <span class="highlight-label">💡 关键记忆点</span>
+                        <div class="highlight-text">${lecture.keyTakeaway}</div>
+                    </div>
+                `;
+            }
+            if (lecture.misconception) {
+                highlightsHtml += `
+                    <div class="highlight-box">
+                        <span class="highlight-label">❌ 常见误区</span>
+                        <div class="highlight-text">${lecture.misconception}</div>
+                    </div>
+                `;
+            }
+            if (lecture.examTips) {
+                highlightsHtml += `
+                    <div class="highlight-box">
+                        <span class="highlight-label">🎯 考点提示</span>
+                        <div class="highlight-text">${lecture.examTips}</div>
+                    </div>
+                `;
+            }
+            modalHighlights.innerHTML = highlightsHtml;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭弹窗
+        function closeModal() {
+            const modal = document.getElementById('lecture-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 点击弹窗外部关闭
+        document.getElementById('lecture-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'lecture-modal') {
+                closeModal();
+            }
+        });
+
+        // ESC键关闭弹窗
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // 搜索和筛选
+        function filterLectures() {
+            const searchInput = document.getElementById('lecture-search');
+            const filter = document.getElementById('lecture-filter');
+            
+            if (!searchInput || !filter) return;
+
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedRange = filter.value;
+
+            let filtered = lecturesData;
+
+            // 按范围筛选
+            if (selectedRange !== 'all') {
+                const [start, end] = selectedRange.split('-').map(Number);
+                filtered = filtered.filter(l => l.id >= start && l.id <= end);
+            }
+
+            // 按搜索词筛选
+            if (searchTerm) {
+                filtered = filtered.filter(l => 
+                    (l.title && l.title.toLowerCase().includes(searchTerm)) ||
+                    (l.content && l.content.toLowerCase().includes(searchTerm)) ||
+                    (l.keyTakeaway && l.keyTakeaway.toLowerCase().includes(searchTerm)) ||
+                    (l.misconception && l.misconception.toLowerCase().includes(searchTerm)) ||
+                    (l.examTips && l.examTips.toLowerCase().includes(searchTerm))
+                );
+            }
+
+            renderLectures(filtered);
+        }
+
+        // 添加搜索和筛选事件监听
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('lecture-search');
+            const filter = document.getElementById('lecture-filter');
+            const loading = document.getElementById('loading');
+
+            // 检查数据是否加载
+            if (typeof lecturesData === 'undefined') {
+                loading.innerHTML = `
+                    <h3 style="color: #FF9900;">⚠️ 讲解数据加载失败</h3>
+                    <p>请确保 js/lectures-data.js 文件存在且格式正确</p>
+                    <p style="margin-top: 1rem;">
+                        <a href="index.html" style="color: #FF9900;">← 返回首页</a>
+                    </p>
+                `;
+                return;
+            }
+
+            // 隐藏加载提示
+            loading.style.display = 'none';
+
+            // 初始渲染
+            renderLectures();
+
+            // 添加事件监听
+            if (searchInput) {
+                searchInput.addEventListener('input', filterLectures);
+            }
+
+            if (filter) {
+                filter.addEventListener('change', filterLectures);
+            }
+
+            // 检查URL中的锚点（从其他页面跳转）
+            if (window.location.hash) {
+                const lectureId = parseInt(window.location.hash.replace('#lecture-', ''));
+                if (!isNaN(lectureId)) {
+                    setTimeout(() => {
+                        openModal(lectureId);
+                    }, 300);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

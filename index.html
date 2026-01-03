@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS CLF-C02 学习导航系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="nav-left">
+                    <h1 class="logo">☁️ AWS CLF-C02 学习导航</h1>
+                </div>
+                <div class="nav-right">
+                    <a href="index.html" class="nav-link active">概念清单</a>
+                    <a href="lectures.html" class="nav-link">详细讲解</a>
+                    <a href="resources.html" class="nav-link">官方资源</a>
+                    <a href="exam-prep.html" class="nav-link">考前冲刺</a>
+                    <button id="theme-toggle" class="theme-btn" title="切换主题">🌙</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 欢迎区域 -->
+        <header class="hero">
+            <h2>🎯 AWS Certified Cloud Practitioner 认证备考系统</h2>
+            <p>完整覆盖 106 个核心概念 · 97 讲 IT 实战解说 · 分层学习体系</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">106</span>
+                    <span class="stat-label">核心概念</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">97</span>
+                    <span class="stat-label">详细讲解</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">31.2h</span>
+                    <span class="stat-label">学习时长</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">考试域</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 学习路径指引 -->
+        <section class="learning-path">
+            <h3>📚 四层学习体系</h3>
+            <div class="path-cards">
+                <div class="path-card">
+                    <div class="path-number">1</div>
+                    <h4>快速全局建立</h4>
+                    <p>106个概念速览 · AWS考试框架 · In-scope服务清单</p>
+                </div>
+                <div class="path-card">
+                    <div class="path-number">2</div>
+                    <h4>深入理解逻辑</h4>
+                    <p>97讲IT实战解说 · 易混点标注 · 按域筛选搜索</p>
+                </div>
+                <div class="path-card">
+                    <div class="path-number">3</div>
+                    <h4>官方权威资源</h4>
+                    <p>考试指南PDF · Well-Architected白皮书 · 官方视频</p>
+                </div>
+                <div class="path-card">
+                    <div class="path-number">4</div>
+                    <h4>考前冲刺</h4>
+                    <p>高频易混点 · 1小时速记 · 应试技巧</p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- 搜索和筛选 -->
+        <section class="search-section">
+            <div class="search-controls">
+                <input type="text" id="search-input" class="search-input" placeholder="🔍 搜索概念、服务或关键词...">
+                <select id="domain-filter" class="domain-filter">
+                    <option value="all">全部域</option>
+                    <option value="Cloud Concepts">☁️ Cloud Concepts</option>
+                    <option value="Security & Compliance">🔒 Security & Compliance</option>
+                    <option value="Cloud Technology & Services">⚙️ Technology & Services</option>
+                    <option value="Billing, Pricing & Support">💰 Billing & Support</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- 概念卡片列表 -->
+        <section class="concepts-section">
+            <div id="concepts-container" class="concepts-grid">
+                <!-- 动态生成概念卡片 -->
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>🎓 AWS Certified Cloud Practitioner (CLF-C02) 学习系统 · 版本 2.0</p>
+            <p>包含完整97讲IT实战解说 · 总学习时长约31.2小时</p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                💡 建议: 先浏览概念清单建立全局认知 → 深入详细讲解理解原理 → 查阅官方资源巩固知识 → 考前冲刺强化记忆
+            </p>
+        </footer>
+    </div>
+
+    <!-- 引入数据和脚本 -->
+    <script src="data/concepts.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
