@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>官方资源 - AWS CLF-C02 学习系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .resource-section {
+            margin: 2rem 0;
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        
+        .resource-section h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--aws-orange);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .resource-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .resource-item {
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border-left: 4px solid var(--aws-orange);
+            transition: all 0.2s;
+        }
+        
+        .resource-item:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow);
+        }
+        
+        .resource-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .resource-desc {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--aws-orange);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        
+        .resource-link:hover {
+            background: var(--aws-orange);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .cost-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        .cost-free {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .cost-paid {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        [data-theme="dark"] .cost-free {
+            background: rgba(40, 167, 69, 0.2);
+            color: #5cb85c;
+        }
+        
+        [data-theme="dark"] .cost-paid {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+        
+        .learning-path-visual {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        
+        .path-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .path-step {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border-top: 4px solid var(--aws-orange);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--aws-orange);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-duration {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="nav-left">
+                    <h1 class="logo">☁️ AWS CLF-C02 学习导航</h1>
+                </div>
+                <div class="nav-right">
+                    <a href="quick-scan.html" class="nav-link">⚡ 快速扫盲</a>
+                    <a href="index.html" class="nav-link">概念清单</a>
+                    <a href="lectures.html" class="nav-link">详细讲解</a>
+                    <a href="resources.html" class="nav-link active">官方资源</a>
+                    <a href="exam-prep.html" class="nav-link">考前冲刺</a>
+                    <button id="theme-toggle" class="theme-btn" title="切换主题">🌙</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 页面标题 -->
+        <header class="page-header">
+            <h2>📚 官方权威资源</h2>
+            <p>AWS官方文档、考试指南、白皮书与认证准备资源</p>
+        </header>
+
+        <!-- 6周学习计划 -->
+        <div class="learning-path-visual">
+            <h3 style="margin-bottom: 0.5rem;">🎯 6周通关计划</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                系统化学习路径，从基础到进阶，稳步通过CLF-C02认证
+            </p>
+            <div class="path-steps">
+                <div class="path-step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">基础概念</div>
+                    <div class="step-duration">第1周 · 17讲</div>
+                </div>
+                <div class="path-step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">核心服务</div>
+                    <div class="step-duration">第2周 · 24讲</div>
+                </div>
+                <div class="path-step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">网络管理</div>
+                    <div class="step-duration">第3周 · 25讲</div>
+                </div>
+                <div class="path-step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">全栈进阶</div>
+                    <div class="step-duration">第4周 · 31讲</div>
+                </div>
+                <div class="path-step">
+                    <div class="step-number">5-6</div>
+                    <div class="step-title">刷题冲刺</div>
+                    <div class="step-duration">第5-6周 · 850+题</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 官方考试资源 -->
+        <section class="resource-section">
+            <h3>📋 AWS 官方考试资源</h3>
+            <div class="resource-list">
+                <div class="resource-item">
+                    <div class="resource-title">
+                        AWS Certified Cloud Practitioner 官方页面
+                        <span class="cost-badge cost-free">免费</span>
+                    </div>
+                    <div class="resource-desc">
+                        官方认证介绍、考试大纲、常见问题解答
+                    </div>
+                    <a href="https://aws.amazon.com/certification/certified-cloud-practitioner/" target="_blank" class="resource-link">
+                        访问官网 →
+                    </a>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-title">
+                        CLF-C02 官方考试指南 PDF
+                        <span class="cost-badge cost-free">免费</span>
+                    </div>
+                    <div class="resource-desc">
+                        详细的考试大纲、4大域权重、考点说明（必读！）
+                    </div>
+                    <a href="https://d1.awsstatic.com/training-and-certification/docs-cloud-practitioner/AWS-Certified-Cloud-Practitioner_Exam-Guide.pdf" target="_blank" class="resource-link">
+                        下载 PDF →
+                    </a>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-title">
+                        AWS Skill Builder 官方学习平台
+                        <span class="cost-badge cost-free">免费</span>
+                    </div>
+                    <div class="resource-desc">
+                        官方提供的免费在线课程、实验室和学习路径
+                    </div>
+                    <a href="https://skillbuilder.aws/" target="_blank" class="resource-link">
+                        开始学习 →
+                    </a>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-title">
+                        AWS 官方练习考试
+                        <span class="cost-badge cost-paid">$20</span>
+                    </div>
+                    <div class="resource-desc">
+                        65题官方练习题，90分钟，模拟真实考试环境
+                    </div>
+                    <a href="https://skillbuilder.aws/exam-prep/cloud-practitioner" target="_blank" class="resource-link">
+                        购买练习考试 →
+                    </a>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-title">
+                        AWS 考试准备页面
+                        <span class="cost-badge cost-free">免费</span>
+                    </div>
+                    <div class="resource-desc">
+                        官方考试准备资源汇总、免费练习题集
+                    </div>
+                    <a href="https://aws.amazon.com/certification/certification-prep/" target="_blank" class="resource-link">
+                        查看资源 →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- AWS 白皮书 -->
+        <section class="resource-section">
+            <h3>📄 AWS 官方白皮书</h3>
+            <div class="resource-list">
+                <div class="resource-item">
+                    <div class="resource-title">
+                        Overview of Amazon Web Services
+                        <span class="cost-badge cost-free">免费</span>
+                    </div>
+                    <div class="resource-desc">
+                        AWS服务总览，了解各类服务的定位和用途（强烈推荐）
+                    </div>
+                    <a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/introduction.html" target="_blank" class="resource-link">
+                        阅读白皮书 →
+                    </a>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-title">
+                        AWS Well-Architected Framework
+                        <span class="cost-badge cost-free">免费</span>
+                    </div>
+                    <div class="resource-desc">
+                        六大架构支柱：运营、安全、可靠、性能、成本、可持续性（考试必读）
+                    </div>
+                    <a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" class="resource-link">
+                        阅读框架 →
+                    </a>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-title">
+                        AWS Pricing/TCO Calculator
+                        <span class="cost-badge cost-free">免费</span>
+                    </div>
+                    <div class="resource-desc">
+                        成本计算工具，评估上云总拥有成本
+                    </div>
+                    <a href="https://calculator.aws/" target="_blank" class="resource-link">
+                        使用计算器 →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 社区资源 -->
+        <section class="resource-section">
+            <h3>🌟 高质量社区资源</h3>
+            <div class="resource-list">
+                <div class="resource-item">
+                    <div class="resource-title">
+                        Tutorials Dojo CLF-C02 学习指南
+                        <span class="cost-badge cost-free">免费</span>
+                    </div>
+                    <div class="resource-desc">
+                        详细的学习路线图、资源整合、备考建议
+                    </div>
+                    <a href="https://tutorialsdojo.com/aws-cloud-practitioner-clf-c02-exam-guide/" target="_blank" class="resource-link">
+                        查看指南 →
+                    </a>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-title">
+                        Andrew Brown - FreeCodeCamp 15小时免费课程
+                        <span class="cost-badge cost-free">免费</span>
+                    </div>
+                    <div class="resource-desc">
+                        YouTube上最受欢迎的CLF-C02备考课程，覆盖全部考点
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=SOTamWNgDKc" target="_blank" class="resource-link">
+                        观看视频 →
+                    </a>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-title">
+                        Reddit - r/AWSCertifications
+                        <span class="cost-badge cost-free">免费</span>
+                    </div>
+                    <div class="resource-desc">
+                        AWS认证社区，经验分享、学习资源、答疑解惑
+                    </div>
+                    <a href="https://www.reddit.com/r/AWSCertifications/" target="_blank" class="resource-link">
+                        访问社区 →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 付费资源推荐 -->
+        <section class="resource-section">
+            <h3>💎 付费资源推荐（性价比高）</h3>
+            <div class="resource-list">
+                <div class="resource-item">
+                    <div class="resource-title">
+                        Tutorials Dojo 练习题 (850+ 题)
+                        <span class="cost-badge cost-paid">$11-15</span>
+                    </div>
+                    <div class="resource-desc">
+                        市场上最全面的CLF-C02练习题库，含详细解析（强烈推荐）
+                    </div>
+                    <a href="https://portal.tutorialsdojo.com/courses/aws-certified-cloud-practitioner-practice-exams/" target="_blank" class="resource-link">
+                        购买题库 →
+                    </a>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-title">
+                        Udemy - Stephane Maarek 课程
+                        <span class="cost-badge cost-paid">$12-15</span>
+                    </div>
+                    <div class="resource-desc">
+                        更新及时的视频课程，含实验环节和练习题
+                    </div>
+                    <a href="https://www.udemy.com/course/aws-certified-cloud-practitioner-new/" target="_blank" class="resource-link">
+                        查看课程 →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 成本对比 -->
+        <section class="resource-section">
+            <h3>💰 备考成本对比</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: var(--bg-secondary);">
+                        <th style="padding: 1rem; text-align: left; border: 1px solid var(--border-color);">资源类型</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">成本</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">更新速度</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">实战性</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">题库</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid var(--border-color);"><strong>本学习系统</strong></td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">$0-35</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">实时</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">⭐⭐⭐⭐⭐</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">需单独购买</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid var(--border-color);">官方教材(Wiley)</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">$40-60</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">慢</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">⭐⭐⭐</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">少量</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid var(--border-color);">Udemy课程</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">$12-15</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">快</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">⭐⭐⭐⭐</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">中等</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid var(--border-color);">Tutorials Dojo</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">$11-15</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">快</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">⭐⭐⭐⭐</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid var(--border-color);">850+题</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 1rem; padding: 1rem; background: var(--bg-secondary); border-radius: 6px; color: var(--text-secondary);">
+                💡 <strong>推荐组合：</strong> 本学习系统 + Tutorials Dojo题库 ($11-15) + AWS官方练习考试 ($20) = 总计 $31-35
+            </p>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>🎓 AWS Certified Cloud Practitioner (CLF-C02) 学习系统 · 版本 2.0</p>
+            <p>整合官方权威资源 · 系统化学习路径 · 经济高效备考方案</p>
+        </footer>
+    </div>
+
+    <!-- 主题切换脚本 -->
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,749 @@
+/* ============================================
+   AWS CLF-C02 学习系统 - 主样式文件
+   ============================================ */
+
+/* 基础变量 - 浅色主题 */
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --text-tertiary: #adb5bd;
+    --border-color: #dee2e6;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+    
+    /* AWS 品牌色 */
+    --aws-orange: #FF9900;
+    --aws-blue: #232F3E;
+    --aws-light-blue: #37475A;
+    
+    /* 功能色 */
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --info: #17a2b8;
+    
+    /* 进度条颜色 */
+    --progress-cloud: #3498db;
+    --progress-security: #e74c3c;
+    --progress-technology: #2ecc71;
+    --progress-billing: #f39c12;
+}
+
+/* 深色主题 */
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-tertiary: #3a3a3a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-tertiary: #808080;
+    --border-color: #404040;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ============================================
+   导航栏
+   ============================================ */
+.navbar {
+    background: var(--bg-primary);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.3s;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.nav-left .logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--aws-orange);
+    margin: 0;
+}
+
+.nav-right {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: color 0.2s;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+}
+
+.nav-link:hover {
+    color: var(--aws-orange);
+    background: var(--bg-secondary);
+}
+
+.nav-link.active {
+    color: var(--aws-orange);
+    background: var(--bg-secondary);
+}
+
+.theme-btn {
+    background: var(--bg-secondary);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+}
+
+.theme-btn:hover {
+    transform: scale(1.1);
+    background: var(--bg-tertiary);
+}
+
+/* ============================================
+   Hero 区域
+   ============================================ */
+.hero {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--bg-primary);
+    border-radius: 16px;
+    margin: 2rem 0;
+    box-shadow: var(--shadow);
+}
+
+.hero h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--aws-orange);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   学习路径卡片
+   ============================================ */
+.learning-path {
+    margin: 3rem 0;
+}
+
+.learning-path h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.path-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.path-card {
+    background: var(--bg-primary);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s;
+    position: relative;
+}
+
+.path-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.path-number {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    background: var(--aws-orange);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.path-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.path-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* ============================================
+   进度追踪区域
+   ============================================ */
+.progress-section {
+    margin: 3rem 0;
+    background: var(--bg-primary);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.progress-header h3 {
+    font-size: 1.8rem;
+    color: var(--text-primary);
+}
+
+.btn-secondary {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: var(--bg-tertiary);
+    transform: scale(1.05);
+}
+
+.domain-progress {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.domain-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.domain-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.domain-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.domain-stats {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--aws-orange);
+    border-radius: 6px;
+    transition: width 0.3s ease;
+}
+
+#cloud-progress { background: var(--progress-cloud); }
+#security-progress { background: var(--progress-security); }
+#technology-progress { background: var(--progress-technology); }
+#billing-progress { background: var(--progress-billing); }
+
+/* ============================================
+   搜索和筛选
+   ============================================ */
+.search-section {
+    margin: 2rem 0;
+}
+
+.search-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all 0.2s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--aws-orange);
+}
+
+.domain-filter {
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.domain-filter:focus {
+    outline: none;
+    border-color: var(--aws-orange);
+}
+
+/* ============================================
+   概念卡片网格
+   ============================================ */
+.concepts-section {
+    margin: 2rem 0 4rem;
+}
+
+.concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.concept-card {
+    background: var(--bg-primary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s;
+    border-left: 4px solid transparent;
+    cursor: pointer;
+}
+
+.concept-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.concept-card.completed {
+    border-left-color: var(--success);
+    opacity: 0.8;
+}
+
+.concept-card[data-domain="Cloud Concepts"] {
+    border-left-color: var(--progress-cloud);
+}
+
+.concept-card[data-domain="Security & Compliance"] {
+    border-left-color: var(--progress-security);
+}
+
+.concept-card[data-domain="Cloud Technology & Services"] {
+    border-left-color: var(--progress-technology);
+}
+
+.concept-card[data-domain="Billing, Pricing & Support"] {
+    border-left-color: var(--progress-billing);
+}
+
+.concept-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 1rem;
+}
+
+.concept-title {
+    flex: 1;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.concept-checkbox {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    accent-color: var(--aws-orange);
+}
+
+.concept-domain {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    margin-bottom: 0.5rem;
+}
+
+.concept-topics {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+}
+
+.concept-misconception {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    background: #fff3cd;
+    padding: 0.5rem;
+    border-radius: 6px;
+    margin-bottom: 0.8rem;
+}
+
+[data-theme="dark"] .concept-misconception {
+    background: rgba(255, 193, 7, 0.2);
+}
+
+.concept-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.concept-duration {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.view-lecture-btn {
+    background: var(--aws-orange);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.view-lecture-btn:hover {
+    background: #e68a00;
+    transform: scale(1.05);
+}
+
+/* ============================================
+   页脚
+   ============================================ */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-color);
+    margin-top: 4rem;
+}
+
+.footer p {
+    margin: 0.5rem 0;
+}
+
+/* ============================================
+   讲解页面专用样式
+   ============================================ */
+.page-header {
+    text-align: center;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.page-header h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.lecture-nav {
+    background: var(--bg-primary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.lecture-nav-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.quick-jump {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.jump-select {
+    flex: 1;
+    padding: 0.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.lectures-content {
+    margin-bottom: 4rem;
+}
+
+.lecture-item {
+    background: var(--bg-primary);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+    scroll-margin-top: 100px;
+}
+
+.lecture-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.lecture-item-title {
+    font-size: 1.8rem;
+    color: var(--text-primary);
+}
+
+.lecture-bookmark {
+    background: var(--bg-secondary);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.2s;
+}
+
+.lecture-bookmark:hover {
+    transform: scale(1.1);
+}
+
+.lecture-bookmark.bookmarked {
+    background: var(--aws-orange);
+}
+
+.lecture-content {
+    color: var(--text-primary);
+    line-height: 1.8;
+}
+
+.lecture-content h3 {
+    margin: 1.5rem 0 1rem;
+    color: var(--aws-orange);
+}
+
+.lecture-content p {
+    margin: 1rem 0;
+}
+
+.lecture-content ul {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.lecture-meta {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.meta-item {
+    flex: 1;
+}
+
+.meta-label {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.meta-content {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* 浮动工具栏 */
+.floating-toolbar {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 999;
+}
+
+.tool-btn {
+    width: 50px;
+    height: 50px;
+    background: var(--aws-orange);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: var(--shadow);
+    transition: all 0.2s;
+}
+
+.tool-btn:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-hover);
+}
+
+/* ============================================
+   响应式设计
+   ============================================ */
+@media (max-width: 768px) {
+    .nav-content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-right {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+    
+    .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .path-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .concepts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-controls {
+        flex-direction: column;
+    }
+    
+    .search-input {
+        min-width: 100%;
+    }
+    
+    .floating-toolbar {
+        bottom: 1rem;
+        right: 1rem;
+    }
+    
+    .tool-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   打印样式
+   ============================================ */
+@media print {
+    .navbar,
+    .search-section,
+    .floating-toolbar {
+        display: none;
+    }
+    
+    .concept-card,
+    .lecture-item {
+        break-inside: avoid;
+    }
+}

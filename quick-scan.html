@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快速扫盲 - AWS CLF-C02 学习导航系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 快速扫盲页面特有样式 */
+        .quick-scan-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .scan-header {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-primary);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .scan-header h2 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .scan-header p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .scan-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .scan-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--aws-orange), var(--aws-blue));
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .scan-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .scan-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scan-stat strong {
+            color: var(--aws-orange);
+            font-size: 1.2rem;
+        }
+
+        .concept-card-compact {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 4px solid var(--aws-orange);
+        }
+
+        .concept-card-compact:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .concept-card-compact.scanned {
+            opacity: 0.6;
+            border-left-color: var(--success);
+        }
+
+        .concept-card-compact .concept-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .concept-card-compact .concept-oneliner {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .concept-card-compact .concept-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .concept-domain {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .concept-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .scan-button {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .scan-button:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        .scan-button.scanned {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+        }
+
+        .deep-dive-btn {
+            background: transparent;
+            color: var(--aws-orange);
+            border: 2px solid var(--aws-orange);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .deep-dive-btn:hover {
+            background: var(--aws-orange);
+            color: white;
+        }
+
+        .scan-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-primary);
+        }
+
+        .control-btn:hover {
+            border-color: var(--aws-orange);
+            color: var(--aws-orange);
+        }
+
+        .control-btn.random-mode {
+            background: var(--aws-orange);
+            color: white;
+            border-color: var(--aws-orange);
+        }
+
+        .control-btn.random-mode:hover {
+            background: #e68a00;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .concept-card-compact {
+                padding: 1.2rem 1.5rem;
+            }
+
+            .concept-card-compact .concept-name {
+                font-size: 1.1rem;
+            }
+
+            .concept-card-compact .concept-oneliner {
+                font-size: 1rem;
+            }
+
+            .concept-meta {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .scan-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .control-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quick-scan-container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="nav-left">
+                    <h1 class="logo">☁️ AWS CLF-C02 快速扫盲</h1>
+                </div>
+                <div class="nav-right">
+                    <a href="index.html" class="nav-link">概念清单</a>
+                    <a href="lectures.html" class="nav-link">详细讲解</a>
+                    <a href="resources.html" class="nav-link">官方资源</a>
+                    <a href="exam-prep.html" class="nav-link">考前冲刺</a>
+                    <a href="quick-scan.html" class="nav-link active">快速扫盲</a>
+                    <button id="theme-toggle" class="theme-btn" title="切换主题">🌙</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 页面头部 -->
+        <div class="scan-header">
+            <h2>⚡ 15分钟快速建立认知地图</h2>
+            <p>用最通俗的话了解每个概念，快速建立整体印象</p>
+
+            <div class="scan-progress-bar">
+                <div class="scan-progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+
+            <div class="scan-stats">
+                <div class="scan-stat">
+                    <span>已扫盲：</span>
+                    <strong id="scanned-count">0</strong>
+                    <span>/</span>
+                    <span id="total-count">0</span>
+                </div>
+                <div class="scan-stat">
+                    <span>剩余：</span>
+                    <strong id="remaining-count">0</strong>
+                </div>
+                <div class="scan-stat">
+                    <span>预计时间：</span>
+                    <strong id="estimated-time">0</strong>
+                    <span>分钟</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 控制按钮 -->
+        <div class="scan-controls">
+            <button class="control-btn" id="show-all">📋 显示全部</button>
+            <button class="control-btn" id="show-unscanned">🆕 只看未扫盲</button>
+            <button class="control-btn random-mode" id="random-mode">🎲 随机模式</button>
+            <button class="control-btn" id="reset-progress">🔄 重置进度</button>
+        </div>
+
+        <!-- 概念卡片容器 -->
+        <div id="concepts-container">
+            <!-- 动态生成概念卡片 -->
+        </div>
+
+        <!-- 完成状态 -->
+        <div id="completion-message" class="scan-header" style="display: none;">
+            <h2>🎉 恭喜！第一轮扫盲完成</h2>
+            <p>现在你已经对所有概念有了初步印象，可以进入<a href="lectures.html" style="color: var(--aws-orange);">详细讲解</a>深入学习</p>
+        </div>
+    </div>
+
+    <!-- 加载数据和脚本 -->
+    <script src="data/concepts.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/quick-scan.js"></script>
+</body>
+</html>
